@@ -1,0 +1,106 @@
+spring:
+  application:
+    name: auth-service
+  profiles:
+    active: dev
+  cloud:
+    discovery:
+      enable: true
+      service-id: config-server
+server:
+  port: 57135
+  session:
+    cookie:
+      http-only: true
+
+security:
+  oauth2:
+    authorization:
+      check-token-access: isAuthenticated()
+      token-key-access: permitAll()
+
+eureka:
+  instance:
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.name}:${random.int}
+management:
+  security:
+    enabled: false
+
+---
+
+spring:
+  profiles: dev
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+dber:
+  database:
+    host: localhost
+    port: 3306
+    database: dber_auth
+    username: root
+    password: cwl123
+    parameters: characterEncoding=utf8&rewriteBatchedStatements=true&autoReconnect=true
+    initialSize: 1
+    maxActive: 2
+    minIdle: 1
+logging:
+  level: debug
+
+server:
+  ssl:
+    enabled: false
+security:
+  oauth2:
+    grant-type:
+      mobile:
+        path: /oauth/mobile
+        validCodePath: /oauth/mobile/code
+        mobileField: cellphone
+        validCodeField: validCode
+        validCodeKeyField: validCodeKey
+      username:
+        path: /oauth/login
+        usernameField: cellphone
+        passwordField: password
+        validCodeField: validCode
+        validCodeKeyField: validCodeKey
+      wechat:
+        path: /oauth/wechat
+        mobileField: cellphone
+        validCodeField: validCode
+        validCodeKeyField: validCodeKey
+    resource:
+      jwt:
+        key-value: |
+          -----BEGIN PUBLIC KEY-----
+          MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCptgGpdhVn/ITGHhESssm+YK3HbgWoMANYAlWXE0p9XtClsAalaMEsvYpm+5ll5LOlCqK84OejYrL94M99KsFmF0Mwf+SO6Fd7ny5RKnqzFEWsaMZ5mb5W+qJDiMwNz43y5m9FkTzF/4htnY9Oxgn0E4xQKdJpUP9g8Rq78/5VxwIDAQAB
+          -----END PUBLIC KEY-----
+        private-key: |
+          -----BEGIN CERTIFICATE-----
+          MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBAKm2Aal2FWf8hMYeERKyyb5grcduBagwA1gCVZcTSn1e0KWwBqVowSy9imb7mWXks6UKorzg56Nisv3gz30qwWYXQzB/5I7oV3ufLlEqerMURaxoxnmZvlb6okOIzA3PjfLmb0WRPMX/iG2dj07GCfQTjFAp0mlQ/2DxGrvz/lXHAgMBAAECgYAjA2LqZGtcLdPyz+cz1WEb/vQ7be6K2YUHFkw0RA2dOf+P/3YPkEIyidRRFN18ESgjB8O1di00HzvQdx43s6d8o1mGxMayJlzmMK6Ps2n7aR0deYdJfn6xVVzUEB34LVVU7yLsPEMp3zaxB5j8m3/c7ab9kRrI82UGmK0LgGHpIQJBAOA4gHy/dHef3vfEIcy08s7oU9UqsWEjCzL+kDufxRTdw1H7QE+c9NBlN6hakiPIzgNEZeKBcFQWQmBi5cmDlPcCQQDBw7QdeP/DCgm4CwlxZMIMhCrguq5hiY7+JV4yRJH6Lnx6nJaHmFEhMRp1/c6N/JntSxeCSZs+pfGHM4t3E6GxAkA0/SVgVd6wZpfK9g8G0byQKVemiPBihGWhJ4fuj1OEGuSN+1K3feBdX45Hux/OVSZan090uCJTvO7y2Gx1syMBAkBBEK2P5AzGer1uvs4J9NKwj0Uyt51NBXst3nB2Is5+G1QTfDeUCtLbeXiwPG07AqLRqxCW4I6wB9tGEkn3z3DRAkAwHJQYgQ4GYz9HBtJg7MoHndw87Nw3pk73WU8R9g7c/sN+q61zq2Q2g2IsAbqWY5Gpj/T/9wj76rs4zi4rUP0w
+          -----END CERTIFICATE-----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

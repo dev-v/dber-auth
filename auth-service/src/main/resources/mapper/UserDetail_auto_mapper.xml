@@ -1,0 +1,249 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dber.auth.mapper.UserDetailMapper">
+
+  <sql id="insertList">
+    (
+      <trim suffixOverrides=",">
+			<if test="id!=null">
+				id,
+			</if>
+			<if test="username!=null">
+				username,
+			</if>
+			<if test="password!=null">
+				password,
+			</if>
+			<if test="mobile!=null">
+				mobile,
+			</if>
+			<if test="email!=null">
+				email,
+			</if>
+			<if test="bindId!=null">
+				bind_id,
+			</if>
+			<if test="status!=null">
+				_status,
+			</if>
+			<if test="system!=null">
+				_system,
+			</if>
+		</trim>
+		) values (
+		<trim suffixOverrides=",">
+			<if test="id!=null">
+				#{id},
+			</if>
+			<if test="username!=null">
+				#{username},
+			</if>
+			<if test="password!=null">
+				#{password},
+			</if>
+			<if test="mobile!=null">
+				#{mobile},
+			</if>
+			<if test="email!=null">
+				#{email},
+			</if>
+			<if test="bindId!=null">
+				#{bindId},
+			</if>
+			<if test="status!=null">
+				#{status},
+			</if>
+			<if test="system!=null">
+				#{system},
+			</if>
+		</trim>
+
+    )
+  </sql>
+
+  <!-- 注意检查非空和主键自增属性 -->
+  <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+    insert
+    into user_detail
+    <include refid="insertList"></include>
+  </insert>
+
+  <delete id="del">
+    DELETE FROM user_detail
+    WHERE id = #{id}
+  </delete>
+
+  <delete id="dels">
+    delete from user_detail where id in
+    <foreach item="item" index="index" collection="array" open="("
+             separator="," close=")">#{item}
+    </foreach>
+    <include refid="maxLimit"></include>
+  </delete>
+
+  <delete id="delByCondition">
+    delete from user_detail
+    <include refid="where"></include>
+  </delete>
+
+
+  <update id="update">
+    update user_detail
+    <set>
+      			<if test="username != null ">
+				username=#{username},
+			</if>
+			<if test="password != null ">
+				password=#{password},
+			</if>
+			<if test="mobile != null ">
+				mobile=#{mobile},
+			</if>
+			<if test="email != null ">
+				email=#{email},
+			</if>
+			<if test="bindId != null ">
+				bind_id=#{bindId},
+			</if>
+			<if test="status != null ">
+				_status=#{status},
+			</if>
+			<if test="system != null ">
+				_system=#{system},
+			</if>
+
+    </set>
+    where id = #{id}
+  </update>
+
+  <insert id="save" useGeneratedKeys="true" keyProperty="id">
+    <!-- 不包含数据库类型为TIMESTAMP（由数据库自动管理）的列 -->
+    insert into user_detail
+    <include refid="insertList"></include>
+    ON DUPLICATE KEY
+    UPDATE
+    <trim suffixOverrides=",">
+      			<if test="username != null ">
+				username=values(username),
+			</if>
+			<if test="password != null ">
+				password=values(password),
+			</if>
+			<if test="mobile != null ">
+				mobile=values(mobile),
+			</if>
+			<if test="email != null ">
+				email=values(email),
+			</if>
+			<if test="bindId != null ">
+				bind_id=values(bind_id),
+			</if>
+			<if test="status != null ">
+				_status=values(_status),
+			</if>
+			<if test="system != null ">
+				_system=values(_system),
+			</if>
+
+    </trim>
+  </insert>
+
+
+  <select id="get" resultType="UserDetail">
+    SELECT *
+    FROM user_detail
+    WHERE id = #{id}
+  </select>
+
+  <select id="gets" resultType="UserDetail">
+    SELECT * FROM user_detail WHERE id IN
+    <foreach item="item" index="index" collection="array" open="("
+             separator="," close=")">#{item}
+    </foreach>
+  </select>
+
+  <select id="getByCondition" resultType="UserDetail">
+    select * from user_detail
+    <include refid="where"></include>
+    limit 1
+  </select>
+
+  <select id="getIds" resultType="long">
+    select id from user_detail
+    <include refid="where"></include>
+    <include refid="maxLimit"></include>
+  </select>
+
+
+  <select id="queryPage" resultType="UserDetail">
+    <include refid="queryList"></include>
+    <include refid="where"></include>
+  </select>
+
+  <select id="query" resultType="UserDetail">
+    <include refid="queryList"></include>
+    <include refid="where"></include>
+    <include refid="maxLimit"></include>
+  </select>
+
+
+  <select id="has" resultType="int">
+    select 1 from user_detail
+    <include refid="where"></include>
+    limit 1
+  </select>
+
+  <select id="count" resultType="int">
+    select count(*) from user_detail
+    <include refid="where"></include>
+  </select>
+
+
+  <sql id="maxLimit">
+    limit 1000
+  </sql>
+
+  <sql id="queryList">
+    SELECT id,username,password,mobile,email,bind_id,_status,_system,create_time,modify_time
+    FROM
+      user_detail
+  </sql>
+
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND">
+      			<if test="id != null">
+				AND id=#{id}
+			</if>
+			<if test="username != null">
+				AND username=#{username}
+			</if>
+			<if test="password != null">
+				AND password=#{password}
+			</if>
+			<if test="mobile != null">
+				AND mobile=#{mobile}
+			</if>
+			<if test="email != null">
+				AND email=#{email}
+			</if>
+			<if test="bindId != null">
+				AND bind_id=#{bindId}
+			</if>
+			<if test="status != null">
+				AND _status=#{status}
+			</if>
+			<if test="system != null">
+				AND _system=#{system}
+			</if>
+			<if test="createTime != null">
+				AND create_time=#{createTime}
+			</if>
+			<if test="modifyTime != null">
+				AND modify_time=#{modifyTime}
+			</if>
+
+    </trim>
+  </sql>
+
+</mapper>

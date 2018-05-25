@@ -1,0 +1,6 @@
+rootProject.name = 'auth'
+
+include 'auth-api'
+include 'auth-service'
+include 'auth-resource'
+
