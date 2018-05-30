@@ -14,6 +14,7 @@ public class DberTokenEnhancer implements TokenEnhancer {
     AuthUserDetails authUserDetails = (AuthUserDetails) authentication.getPrincipal();
     Map<String, Object> additionalInfo = new HashMap<>();
     additionalInfo.put("user_id", authUserDetails.getUserId());
+    additionalInfo.put("user_name", authUserDetails.getUsername());
     additionalInfo.put("system", authUserDetails.getSystem());
     ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
     return accessToken;

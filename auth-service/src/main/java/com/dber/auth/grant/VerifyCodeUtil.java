@@ -1,7 +1,6 @@
-package com.dber.auth.verify;
+package com.dber.auth.grant;
 
 import com.dber.tool.util.ExpireMap;
-import org.springframework.security.core.AuthenticationException;
 
 import java.util.Random;
 

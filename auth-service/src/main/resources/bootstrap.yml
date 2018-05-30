@@ -52,6 +52,12 @@ logging:
 server:
   ssl:
     enabled: false
+  session:
+    cookie:
+      domain: dber.com.cn
+      http-only: true
+      path: /
+      max-age: 10
 security:
   oauth2:
     grant-type:
@@ -82,7 +88,6 @@ security:
           -----BEGIN CERTIFICATE-----
           MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBAKm2Aal2FWf8hMYeERKyyb5grcduBagwA1gCVZcTSn1e0KWwBqVowSy9imb7mWXks6UKorzg56Nisv3gz30qwWYXQzB/5I7oV3ufLlEqerMURaxoxnmZvlb6okOIzA3PjfLmb0WRPMX/iG2dj07GCfQTjFAp0mlQ/2DxGrvz/lXHAgMBAAECgYAjA2LqZGtcLdPyz+cz1WEb/vQ7be6K2YUHFkw0RA2dOf+P/3YPkEIyidRRFN18ESgjB8O1di00HzvQdx43s6d8o1mGxMayJlzmMK6Ps2n7aR0deYdJfn6xVVzUEB34LVVU7yLsPEMp3zaxB5j8m3/c7ab9kRrI82UGmK0LgGHpIQJBAOA4gHy/dHef3vfEIcy08s7oU9UqsWEjCzL+kDufxRTdw1H7QE+c9NBlN6hakiPIzgNEZeKBcFQWQmBi5cmDlPcCQQDBw7QdeP/DCgm4CwlxZMIMhCrguq5hiY7+JV4yRJH6Lnx6nJaHmFEhMRp1/c6N/JntSxeCSZs+pfGHM4t3E6GxAkA0/SVgVd6wZpfK9g8G0byQKVemiPBihGWhJ4fuj1OEGuSN+1K3feBdX45Hux/OVSZan090uCJTvO7y2Gx1syMBAkBBEK2P5AzGer1uvs4J9NKwj0Uyt51NBXst3nB2Is5+G1QTfDeUCtLbeXiwPG07AqLRqxCW4I6wB9tGEkn3z3DRAkAwHJQYgQ4GYz9HBtJg7MoHndw87Nw3pk73WU8R9g7c/sN+q61zq2Q2g2IsAbqWY5Gpj/T/9wj76rs4zi4rUP0w
           -----END CERTIFICATE-----
-
 
 
 

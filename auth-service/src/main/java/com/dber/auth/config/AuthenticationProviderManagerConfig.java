@@ -1,7 +1,7 @@
 package com.dber.auth.config;
 
 import com.dber.auth.service.UserDetailService;
-import com.dber.auth.verify.mobile.MobileAuthenticationProvider;
+import com.dber.auth.grant.mobile.MobileAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;

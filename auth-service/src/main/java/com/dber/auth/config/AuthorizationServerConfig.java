@@ -1,10 +1,16 @@
 package com.dber.auth.config;
 
+import com.dber.auth.response.TokenFilter;
 import com.dber.auth.resource.config.JwtAuthenticationResourceConfig;
 import com.dber.auth.server.DberTokenEnhancer;
 import com.dber.auth.service.UserDetailService;
-import com.dber.auth.verify.mobile.MobileTokenGranter;
+import com.dber.auth.grant.mobile.MobileTokenGranter;
+import com.dber.tool.config.ServerConfig;
+import org.apache.tomcat.util.http.LegacyCookieProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
+import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -19,7 +25,6 @@ import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.CompositeTokenGranter;
 import org.springframework.security.oauth2.provider.OAuth2RequestFactory;
 import org.springframework.security.oauth2.provider.TokenGranter;
-import org.springframework.security.oauth2.provider.endpoint.TokenEndpoint;
 import org.springframework.security.oauth2.provider.refresh.RefreshTokenGranter;
 import org.springframework.security.oauth2.provider.token.*;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
@@ -33,6 +38,9 @@ import java.util.List;
 @Import({JwtTokenConfig.class, AuthServiceConfig.class, JwtAuthenticationResourceConfig.class})
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
+
+  @Autowired
+  private ServerConfig serverConfig;
 
   @Autowired
   private DataSource dataSource;
@@ -91,5 +99,22 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     tokenGranters.add(new RefreshTokenGranter(tokenServices, clientDetailsService, requestFactory));
     CompositeTokenGranter granter = new CompositeTokenGranter(tokenGranters);
     return granter;
+  }
+
+  @Bean
+  public FilterRegistrationBean filterRegistrationBean() {
+    FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean(new TokenFilter(serverConfig.getSession().getCookie()));
+    filterRegistrationBean.addUrlPatterns("/oauth/token");
+    return filterRegistrationBean;
+  }
+
+  @Bean
+  public EmbeddedServletContainerCustomizer customizer() {
+    return container -> {
+      if (container instanceof TomcatEmbeddedServletContainerFactory) {
+        TomcatEmbeddedServletContainerFactory tomcat = (TomcatEmbeddedServletContainerFactory) container;
+        tomcat.addContextCustomizers(context -> context.setCookieProcessor(new LegacyCookieProcessor()));
+      }
+    };
   }
 }

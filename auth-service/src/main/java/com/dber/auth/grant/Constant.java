@@ -1,4 +1,4 @@
-package com.dber.auth.verify;
+package com.dber.auth.grant;
 
 public interface Constant {
   interface GrantType {

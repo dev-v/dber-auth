@@ -1,6 +1,5 @@
-package com.dber.auth.verify.mobile;
+package com.dber.auth.grant.mobile;
 
-import com.dber.auth.api.entity.UserDetail;
 import com.dber.auth.server.AuthUserDetails;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;

@@ -46,7 +46,7 @@ public class UserDetailServiceImpl extends AbstractService<UserDetail> implement
   public AuthUserDetails loadUserByMobile(String mobile) {
     UserDetail userDetail = new UserDetail();
     userDetail.setMobile(mobile);
-    userDetail.setUsername("aaaa");
+    userDetail.setUsername("aa阿粉绿色减肥aa");
     userDetail.setId(111L);
     userDetail.setSystem(1);
     return new AuthUserDetails(userDetail);

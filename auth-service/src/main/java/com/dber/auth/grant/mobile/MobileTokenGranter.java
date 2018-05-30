@@ -1,6 +1,6 @@
-package com.dber.auth.verify.mobile;
+package com.dber.auth.grant.mobile;
 
-import com.dber.auth.verify.Constant;
+import com.dber.auth.grant.Constant;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;

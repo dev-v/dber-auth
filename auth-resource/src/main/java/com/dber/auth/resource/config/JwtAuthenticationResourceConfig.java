@@ -1,5 +1,6 @@
 package com.dber.auth.resource.config;
 
+import com.dber.auth.resource.jwt.CookieBearerTokenExtractor;
 import com.dber.auth.resource.jwt.JwtUserAuthenticationConverter;
 import com.dber.tool.config.SecurityConfig;
 import com.dber.tool.encryp.RSAKeyPairUtil;
@@ -13,6 +14,7 @@ import org.springframework.security.jwt.crypto.sign.RsaVerifier;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationProcessingFilter;
 import org.springframework.security.oauth2.provider.token.*;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
@@ -54,6 +56,9 @@ public class JwtAuthenticationResourceConfig extends ResourceServerConfigurerAda
     DefaultTokenServices tokenServices = new DefaultTokenServices();
     tokenServices.setTokenStore(tokenStore);
 
+
     resources.tokenServices(tokenServices);
+
+    resources.tokenExtractor(new CookieBearerTokenExtractor());
   }
 }

@@ -1,4 +1,4 @@
-package com.dber.auth.verify;
+package com.dber.auth.grant;
 
 import org.springframework.security.core.AuthenticationException;
 

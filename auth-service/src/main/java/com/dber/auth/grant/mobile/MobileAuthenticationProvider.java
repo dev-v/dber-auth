@@ -1,9 +1,8 @@
-package com.dber.auth.verify.mobile;
+package com.dber.auth.grant.mobile;
 
-import com.dber.auth.api.entity.UserDetail;
 import com.dber.auth.server.AuthUserDetails;
 import com.dber.auth.service.UserDetailService;
-import com.dber.auth.verify.VerifyCodeUtil;
+import com.dber.auth.grant.VerifyCodeUtil;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;

@@ -1,4 +1,4 @@
-package com.dber.auth.verify.mobile;
+package com.dber.auth.grant.mobile;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
